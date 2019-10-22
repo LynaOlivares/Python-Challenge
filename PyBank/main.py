@@ -46,15 +46,15 @@ with open(budgetpath, "r", newline = "") as budgetfile:
 
 average_change = round((change_total / change_count), 2)
 
-# write output to screen
-print()
-print("Financial Analysis")
-print("-------------------------------")
-print(f"Total Months:  {row_count}")
-print(f"Total:  ${total}")
-print(f"Average Change:  ${average_change}")
-print(f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})")
-print(f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})")
+# output lines
+
+outline1 = ["Financial Analysis"]
+outline2 = ["-------------------------------"]
+outline3 = [f"Total Months:  {row_count}"]
+outline4 = [f"Total:  ${total}"]
+outline5 = [f"Average Change:  ${average_change}"]
+outline6 = [f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})"]
+outline7 = [f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})"]
 
 # write output to a file
 outpath = os.path.join("Resources", "budget_results.csv")
@@ -62,11 +62,20 @@ outpath = os.path.join("Resources", "budget_results.csv")
 with open(outpath, "w", newline="") as outfile:
     writer = csv.writer(outfile)
     
-    writer.writerow(["Financial Analysis"])
-    writer.writerow(["-------------------------------"])
-    writer.writerow([f"Total Months:  {row_count}"])
-    writer.writerow([f"Total:  ${total}"])
-    writer.writerow([f"Average Change:  ${average_change}"])
-    writer.writerow([f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})"])
-    writer.writerow([f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})"])
+    writer.writerow(outline1)
+    writer.writerow(outline2)
+    writer.writerow(outline3)
+    writer.writerow(outline4)
+    writer.writerow(outline5)
+    writer.writerow(outline6)
+    writer.writerow(outline7)
 
+# print output to a screen
+print()
+print(outline1)
+print(outline2)
+print(outline3)
+print(outline4)
+print(outline5)
+print(outline6)
+print(outline7)
