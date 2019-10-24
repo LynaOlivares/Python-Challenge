@@ -13,7 +13,6 @@ with open(budgetpath, "r", newline = "") as budgetfile:
     # print(lines)
     budgetreader = csv.reader(budgetfile, delimiter=",")
     budget_header = next(budgetreader)
-    #print(f"Header:  {budget_header}")
     
     #initalize variables
     row_count = 0

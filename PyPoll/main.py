@@ -4,7 +4,7 @@
 import os
 import csv
 
-# Open file for read
+# Open file for read, create file list for re-reading
 datapath = os.path.join("Resources", "election_data.csv")
 
 with open(datapath, "r", newline = "") as datafile:
@@ -13,33 +13,50 @@ with open(datapath, "r", newline = "") as datafile:
     data_header = next(datareader)
     data_list = list(datareader)
 
-    #initalize variables
+#initial processing
 candidates = []
+election_report = []
+
 total_votes = len(data_list)    
-    
+
+election_report.append("-------------------------------")
+election_report.append("Election Results")
+election_report.append("-------------------------------")
+election_report.append(f"Total Votes:  {total_votes}")
+election_report.append("-------------------------------")
+
+# read list to gather candidate vote information
+previous_votes = 0
+
 for dlist in data_list:
     if dlist[2] not in candidates:
         candidates.append(dlist[2])
 
-# #testing - remove before turning in
-print(f"vote count:  {total_votes}")
-print(candidates)
-
 for name in candidates:
     votes = sum(1 for i in data_list if i[2] == name) 
-    percent = round((votes / total_votes) * 100, 2)
+    percent = round((votes / total_votes) * 100, 3)
 
-    print(f"candiate name:  {name} percent:  {percent} candidate count:  {votes}")    
-        # candidate_count = (candidate_count+1 for slist in data_list if slist[2] == name)
-#     # percent = round((candidate_count / vote_count) * 100, 2)
-#     # candidate_info.append(name, percent, candidate_count)
+    if votes > previous_votes:
+        winner = name
+        previous_votes = votes
 
-# print()
-# print("Financial Analysis")
-# print("-------------------------------")
-# print(f"Total Months:  {row_count}")
-# print(f"Total:  ${total}")
-# print(f"Average Change:  ${average_change}")
-# print(f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})")
-# print(f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})")
+    election_report.append(f"{name}:   {percent}%   ({votes})")
+  
+# list ending results
+election_report.append("-------------------------------")
+election_report.append(f"Winner:  {winner}")
+election_report.append("-------------------------------")
 
+# open output file and write results
+
+outpath = os.path.join("Resources", "poll_results.csv")
+
+with open(outpath, "w", newline="") as outfile:
+    writer = csv.writer(outfile)
+
+    print()
+    for row in election_report:
+        writer.writerow([row])
+        print(row)
+
+#end of process
