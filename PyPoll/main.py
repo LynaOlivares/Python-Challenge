@@ -19,7 +19,7 @@ election_report = []
 
 total_votes = len(data_list)    
 
-election_report.append("-------------------------------")
+election_report.append(" ")
 election_report.append("Election Results")
 election_report.append("-------------------------------")
 election_report.append(f"Total Votes:  {total_votes}")
@@ -54,7 +54,6 @@ outpath = os.path.join("Resources", "poll_results.csv")
 with open(outpath, "w", newline="") as outfile:
     writer = csv.writer(outfile)
 
-    print()
     for row in election_report:
         writer.writerow([row])
         print(row)

@@ -8,9 +8,7 @@ import csv
 budgetpath = os.path.join("Resources", "budget_data.csv")
 
 with open(budgetpath, "r", newline = "") as budgetfile:
-    # print(budgetfile)
-    # lines = budgetfile.read()
-    # print(lines)
+
     budgetreader = csv.reader(budgetfile, delimiter=",")
     budget_header = next(budgetreader)
     
@@ -47,34 +45,25 @@ average_change = round((change_total / change_count), 2)
 
 # output lines
 
-outline1 = ["Financial Analysis"]
-outline2 = ["-------------------------------"]
-outline3 = [f"Total Months:  {row_count}"]
-outline4 = [f"Total:  ${total}"]
-outline5 = [f"Average Change:  ${average_change}"]
-outline6 = [f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})"]
-outline7 = [f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})"]
+outlines = []
+
+outlines.append(" ")
+outlines.append("Financial Analysis")
+outlines.append("-------------------------------")
+outlines.append(f"Total Months:  {row_count}")
+outlines.append(f"Total:  ${total}")
+outlines.append(f"Average Change:  ${average_change}")
+outlines.append(f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})")
+outlines.append(f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})")
 
 # write output to a file
 outpath = os.path.join("Resources", "budget_results.csv")
 
 with open(outpath, "w", newline="") as outfile:
     writer = csv.writer(outfile)
-    
-    writer.writerow(outline1)
-    writer.writerow(outline2)
-    writer.writerow(outline3)
-    writer.writerow(outline4)
-    writer.writerow(outline5)
-    writer.writerow(outline6)
-    writer.writerow(outline7)
 
-# print output to a screen
-print()
-print(outline1)
-print(outline2)
-print(outline3)
-print(outline4)
-print(outline5)
-print(outline6)
-print(outline7)
+    for row in outlines:
+        writer.writerow([row])
+        print(row)
+
+# end processing
