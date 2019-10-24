@@ -8,50 +8,38 @@ import csv
 datapath = os.path.join("Resources", "election_data.csv")
 
 with open(datapath, "r", newline = "") as datafile:
-    # print(datatfile)
-    # lines = datafile.read()
-    # print(lines)
+
     datareader = csv.reader(datafile, delimiter=",")
     data_header = next(datareader)
-    #print(f"Header:  {data_header}")
-    
+    data_list = list(datareader)
+
     #initalize variables
-    row_count = 0
-    # total = 0
-    # change_count = 0
-    # change_total = 0
-    # greatest_increase = 0
-    # greatest_decrease = 0
+candidates = []
+total_votes = len(data_list)    
     
-    for rows in datareader:
-        row_count = row_count + 1
-        total = total + int(rows[1])
-        
-        if row_count == 1:
-            previous_row_total = int(rows[1])
-        else:
-            change_count = change_count + 1
-            change_amount = int(rows[1]) - previous_row_total
-            change_total = change_total + change_amount
+for dlist in data_list:
+    if dlist[2] not in candidates:
+        candidates.append(dlist[2])
 
-            if change_amount > greatest_increase:
-                greatest_increase = change_amount
-                greatest_increase_date = rows[0]
+# #testing - remove before turning in
+print(f"vote count:  {total_votes}")
+print(candidates)
 
-            if change_amount < greatest_decrease:
-                greatest_decrease = change_amount
-                greatest_decrease_date = rows[0]
-            
-            previous_row_total = int(rows[1])
+for name in candidates:
+    votes = sum(1 for i in data_list if i[2] == name) 
+    percent = round((votes / total_votes) * 100, 2)
 
-average_change = round((change_total / change_count), 2)
+    print(f"candiate name:  {name} percent:  {percent} candidate count:  {votes}")    
+        # candidate_count = (candidate_count+1 for slist in data_list if slist[2] == name)
+#     # percent = round((candidate_count / vote_count) * 100, 2)
+#     # candidate_info.append(name, percent, candidate_count)
 
-print()
-print("Financial Analysis")
-print("-------------------------------")
-print(f"Total Months:  {row_count}")
-print(f"Total:  ${total}")
-print(f"Average Change:  ${average_change}")
-print(f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})")
-print(f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})")
+# print()
+# print("Financial Analysis")
+# print("-------------------------------")
+# print(f"Total Months:  {row_count}")
+# print(f"Total:  ${total}")
+# print(f"Average Change:  ${average_change}")
+# print(f"Greatest Increase in Profits:  {greatest_increase_date}  (${greatest_increase})")
+# print(f"Greatest Decrease in Profits:  {greatest_decrease_date}  (${greatest_decrease})")
 
